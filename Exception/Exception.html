@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        	function validateAge(age) { // age is a text to check 
+              if (age === '') return // no age is valid 
+                  age = +age
+               
+            	  if (isNaN(age)) {
+               	    throw { name: 'BadAge', message: 'Invalid age' }
+               	  }
+            	  if (age < 5 || age > 150) {
+                	    throw { name: 'BadAge', message: 'Age out of range' }
+                  }
+            	}
+         
+        	try {
+            	  var age = prompt("Enter your age please?")             	  
+            	  validateAge(age)            	 
+            	  alert("The age is accepted!")
+            	} catch(e) {
+                	  alert("Error: "+e.message)
+          	}
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

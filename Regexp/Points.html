@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <h1>Regular Expressions - RegExp</h1>
+    <h3>Regular expressions provide a powerful way to search and manipulate text</h3>
+    <hr />
+    <pre>
+    A regular expression consists of:
+        A pattern  to match text
+        Zero or more modifiers (also called flags) that provide more instructions on how the pattern should be applied
+
+     JavaScript provides the RegExp() constructor to create regular expression objects.
+
+    >>> var re = new RegExp("j.*t");
+
+      "Match any string that starts with j, ends with t and has zero or more characters in between". 
+        The asterisk * means "zero or more of the preceding"; the dot (.) means "any character"
+
+      Properties of the RegExp Objects:
+      ------------------------------------
+
+        global: If this property is false, which is the default, the search stops when the first match is found. 
+                   Set this to true if you want all matches.
+
+        ignoreCase: Case sensitive match or not, defaults to false.
+
+        multiline: Search matches that may span over more than one line,defaults to false.
+    
+        lastIndex: The position at which to start the search, defaults to 0.
+
+        source: Contains the regexp pattern.
+
+                var re = new RegExp('j.*t', 'gmi');
+
+                        "g" for global
+                        "i" for ignoreCase
+                        "m" for multiline
+        
+                    >>> re.global;  //true    CHECK IT 
+
+
+         Methods of the RegExp Objects:
+        ----------------------------------
+        The regex objects provide two methods you can use to find matches: test() and exec(). 
+        They both accept a string parameter. test() returns a boolean  while exec() returns an array of matched strings.
+
+                No match, because of the capital J:
+                >>> /j.*t/.test("Javascript") ;  // false
+
+                Case insensitive test gives a positive result:
+                >>> /j.*t/i.test("Javascript");// true
+
+                The same test using exec() returns an array and  can access the first element 
+                >>> /j.*t/i.exec("Javascript")[0] ;  //  "Javascript"
+
+            The string objects provide the following methods that accept regular expression objects as parameters:
+            ---------------------------------------------------------------------------------------------------------------
+        match() returns an array of matches
+        search() returns the position of the first match
+        replace() allows you to substitute matched text with another string
+        split() also accepts a regexp when splitting a string into array elements
+
+         search() and match()
+    
+            >>> var s = new String('HelloJavaScriptWorld');
+
+            Using match() you get an array containing only the first match:
+                >>> s.match(/a/);    //  ["a"]
+
+        Using the g modifier, you perform a global search, so the result array contains two elements:
+        >>> s.match(/a/g);    //["a", "a"]
+
+            Case insensitive match:
+            >>> s.match(/j.*a/i); // ["Java"]
+
+         replace():
+            replace() allows you to replace the matched text with some other string.
+
+             The following example removes all capital letters (it replaces them with blank strings):
+                >>> s.replace(/[A-Z]/g, '');    // "elloavacriptorld"
+
+            If you omit the g modifier, you're only going to replace the first match:
+                >>> s.replace(/[A-Z]/, '');   //"elloJavaScriptWorld"
+
+           When a match is found, if you want to include the matched text in the replacement string, you can access it using $&.
+                s.replace(/[A-Z]/g, "_$&");    //"_Hello_Java_Script_World"
+
+            split()
+               creates an array from an input string and a delimiter string. 
+                    >>> var csv = 'one, two,three ,four';
+                    >>> csv.split(','); // ["one", " two", "three ", "four"]
+
+                Because the input string has some inconsistent spaces before and after the commas, 
+                the array result has spaces too. With a regular expression, we can fix this, using \s*, 
+                which means "zero or more spaces":
+
+                >>> csv.split(/\s*,\s*/)
+                     ["one", "two", "three", "four"]
+</pre>
+</body>
+</html>

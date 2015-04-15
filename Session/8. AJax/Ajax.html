@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>AJAX</title>
+</head>
+<body>
+    <h1>AJAX</h1>
+    <hr />
+    <h3>XMLHttpRequest</h3>
+     <h4>XMLHttpRequest() is an object (a constructor function) that allows you to send <br />
+            HTTP requests from JavaScript - Supported by all most all browsers
+</h4>
+    <pre>
+       AJAX stands for Asynchronous JavaScript and XML.
+
+    Asynchronous because after sending an HTTP request your code 
+    doesn't need to wait for the response, but it can do other stuff and
+     be notified (through an event) when the response arrives.
+
+    XML because initially developers were making HTTP requests for XML 
+    documents and were using the data contained in them to update the page. 
+
+    Data can be  JSON format, or simply as HTML ready to be inserted into the page.
+
+     Send the Request
+
+    In order to create an object you simply use this
+
+        var xhr = new XMLHttpRequest();
+
+        var xhr = new ActiveXObject('MSXML2.XMLHTTP.3.0'); //IE7
+    
+    The next thing is to attach an event listener to the readystatechange event fired by the object:
+
+        xhr.onreadystatechange = myCallback;
+        xhr.open('GET', 'somefile.txt', true);
+        xhr.send('');
+
+            XHR object called readyState. Every time it changes, the readystatechange event fires. 
+    
+    The possible values of the readyState property are as follows:
+            0—uninitialized
+            1—loading
+            2—loaded
+            3—interactive
+            4—complete
+
+            function myCallback() {
+                    if (xhr.readyState < 4) {
+                        return; // not ready yet
+                        }
+            if (xhr.status !== 200) {
+                alert('Error!'); // the HTTP status code is not OK
+                return;
+                }
+        // all is fine, do the work
+            alert(xhr.responseText);
+        }
+</pre>
+
+
+</body>
+</html>

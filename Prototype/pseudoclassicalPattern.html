@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Pseudo classical pattern</title>
+    <script>
+        	function Animal(name) {
+            	  this.name = name
+            	}
+        	 
+        	Animal.prototype = { 
+            	  canWalk: true,
+            	  sit: function() {
+                	    this.canWalk = false
+                	    alert(this.name + ' sits down.')
+                  }
+        	}
+        	//1.	When new Animal(name) is called, the new object recieves __proto__ reference 
+        	//to Animal.prototype, 
+        	var animal = new Animal('Pet') 
+        	 
+        	alert(animal.canWalk) // true
+        	 
+        	//2.	Method animal.sit changes animal.canWalk in the instance, 
+        	//so now this animal object can’t walk. But other animals still can. 
+            animal.sit()             
+         
+        	alert(animal.canWalk) // false
+
+        /*
+        The scheme for a pseudo-class:
+        •	Methods and default properties are in prototype.
+        •	Methods in prototype use this, which is the current object because the value of this only depend on the calling context, so animal.sit() would set this to animal.
+
+        */
+
+        //Prototype
+        	function Rabbit(name) {
+        	    	  this.name = name
+        	    	}
+        	 
+            	Rabbit.prototype.jump = function() {
+            	    this.canWalk = true;
+        	    	  alert(this.name + ' jumps!')
+        	    	}
+            	var rabbit = new Rabbit('Murthy');
+            	rabbit.jump();
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

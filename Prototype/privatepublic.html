@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        function Animal(name) {
+            this.name = name
+            this.run = function () {
+                alert("running " + this.name)
+            }
+        }
+
+    	function Rabbit(name) {        
+        	  Animal.call(this, "Mr. " + name.toUpperCase())        
+        	  var created = new Date()  // private  (local variable)
+        
+          function sayHi() {  // private method
+               alert("I'm talking rabbit " + name)
+            	  }
+        // public method
+       	  this.report = function() {
+            	    sayHi.apply(this)
+               	    alert("Created at " + created)
+              }
+        	}
+    
+    	rabbit = new Rabbit("Murthy")    
+    	rabbit.report()
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

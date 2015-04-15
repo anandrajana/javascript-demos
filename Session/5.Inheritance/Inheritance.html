@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Inheritance</title>
+    <script>
+        // Prototype chain example
+        function Shape() {
+            this.name = 'shape';
+            this.toString = function () { return this.name; };
+        }
+        function TwoDShape() {
+            this.name = '2D shape';
+        }
+        function Triangle(side, height) {
+            this.name = 'Triangle';
+            this.side = side;
+            this.height = height;
+            this.getArea = function () { return this.side * this.height / 2; };
+        }
+
+        TwoDShape.prototype = new Shape();
+        Triangle.prototype = new TwoDShape();
+        var my = new Triangle(5, 10);
+        console.log("Area :" + my.getArea());
+        console.log(my.toString());  // Triangle
+
+        // it is good idea to reset constructor to avoid overwriting prototype to avoid side affects
+        TwoDShape.prototype.constructor = TwoDShape;
+        Triangle.prototype.constructor = Triangle;
+        console.log(my.constructor); // Triangle(side, height)
+
+        /*
+
+        It's interesting to note what the JavaScript engine does when you call my.toString():
+
+        It loops through all of the properties of my and doesn't find a method called toString().
+
+        It looks at the object that my.__proto__ points to; this object is the instance
+                new TwoDShape() created during the inheritance process.
+
+        Now the JavaScript engine loops through the instance of TwoDShape and doesn't find a toString() method. 
+               It then checks the __proto__ of that object. This time __proto__ points to the instance created by new Shape().
+
+        The instance of new Shape() is examined and toString() is finally found!
+
+        This method is invoked in the context of my, meaning that this points to my.
+
+        If you ask my, "who's your constructor?" it will report it correctly
+        because of the constructor property reset that we did after inheriting:
+
+        my.constructor ; Triangle(side, height)
+
+        */
+
+        //  Using the instanceof operator you can validate that my is an instance of all three constructors.
+        console.log("instance of shape :"+(my instanceof Shape));  //true
+        console.log("instance of  TwoDShape :" + (my instanceof TwoDShape)); //true
+        console.log("instance of Triangle" + (my instanceof Triangle));//true        
+        console.log("instance of Array :"+( my instanceof Array));//false
+        
+
+    </script>
+</head>
+<body>
+    <h1>Inheritance</h1>
+    <hr />
+    <h2>Prototype Chaining is the default way to implement inheritance (ECMA script)</h2>    
+    <pre>
+     in javascript every function has a prototype property, which contains an object. 
+     When this function is invoked using the new operator,
+      an object is created and this object has a secret link to the prototype object.
+
+    The secret link (called __proto__ in some environments) allows methods and properties 
+    of the prototype object to be used as if they belong to the newly-created object.
+
+     The prototype object is just a regular object and therefore
+     it also contains a link to its prototype. And so a chain is created, called a prototype chain.
+
+    A (_proto_) --> B (_proto_) --> C (_proto_) -->Object --> null
+
+      an object A contains a number of properties. One of the properties is the hidden __proto__ property, 
+        which points to another object, B.   B's __proto__ property points to C. 
+     
+     This chain ends with the Object object, which is the highest-level parent, and every object inherits from it.
+</pre>
+
+    <h3>// Inheriting Prototype only - Best practise - Refined version (see above code in script tag)</h3>
+    <pre>
+        function Shape(){};
+        // augment prototype
+            Shape.prototype.name = 'shape';
+            Shape.prototype.toString = function() {return this.name;};
+       
+         function TwoDShape(){}
+        // take care of inheritance
+            TwoDShape.prototype = Shape.prototype;
+            TwoDShape.prototype.constructor = TwoDShape;
+        
+        // augment prototype
+            TwoDShape.prototype.name = '2D shape';
+            function Triangle(side, height) {
+                    this.side = side;
+                    this.height = height;
+        }
+        // take care of inheritance
+            Triangle.prototype = TwoDShape.prototype;
+            Triangle.prototype.constructor = Triangle;
+        
+        // augment prototype
+                Triangle.prototype.name = 'Triangle';
+                Triangle.prototype.getArea = function(){return this.side * this.height / 2;}
+        
+        The test code will give the same result:
+        >>> var my = new Triangle(5, 10);
+        >>> my.getArea();  //25
+        >>> my.toString()  ;  //"Triangle"
+</pre>
+   
+    <h3>This means that inheriting the object contained in Shape.prototype is better <br />
+          than inheriting the object created with new Shape(). 
+
+    <br /> After all, new Shape() will only give you own shape properties which are not meant to be reused
+    <br /> (otherwise they would be in the prototype). 
+    <br /> You gain a little more efficiency by:
+<br />Not creating a new object for the sake of inheritance alone, and
+<br />Having less lookups during runtime when it comes to searching for toString() for example.</h3>
+
+    <h1>Multiple inheritance</h1>
+    <pre>
+           
+        Multiple inheritance is where a child inherits from more than one parent:
+
+            function multi() {
+                var n = {}, stuff, j = 0, len = arguments.length;
+                for (j = 0; j < len; j++) {
+                    stuff = arguments[j];
+                    for (var i in stuff) {
+                    n[i] = stuff[i];
+                }
+            }
+            return n;
+        }
+
+            var shape = {
+                name: 'shape',
+                toString: function() {return this.name;}
+            };
+
+            var twoDee = {
+                name: '2D shape',
+                dimensions: 2
+            };
+
+            var triangle = multi(shape, twoDee, {
+                name: 'Triangle',
+                getArea: function(){return this.side * this.height / 2;},
+                side: 5,
+                height: 10
+            });
+
+            console.log( triangle.getArea());   //25
+            console.log( triangle.dimensions);  //2
+            console.log(triangle.toString()) ;// triangle    
+</pre>
+    <h1>Mixin</h1>
+    <pre>
+            Mixin is an object that provides some useful functionality but is not meant 
+            to be inherited and extended by sub-objects.
+    
+         When we create a new object we can pick and choose any other objects to mix into your new object. 
+
+        By passing them all to multi() you get all their functionality without making them part of the inheritance tree.
+</pre>
+
+    <h1>Parasitic Inheritance</h1>
+
+    <h3>a function that creates objects by taking all of the functionality of another object, 
+    <br />augmenting it and returning it, "pretending that it has done all the work".</h3>
+    <pre>
+            object literal, and unaware of the fact that it is soon going to fall victim to parasitism:
+        
+            var twoD = {
+                name: '2D shape',
+                dimensions: 2
+                };
+
+                A function that creates triangle objects could:
+
+                1. Clone the twoD object into an object called that by copying all properties.
+                2. Augment that with more properties.
+                3. Return that.
+
+                function triangle(s, h) {
+                        var that = object(twoD);
+                        that.name ='Triangle';
+                        that.getArea = function(){return this.side * this.height / 2;};
+                        that.side = s;
+                        that.height = h;
+                        return that;
+                    }
+
+                Because triangle() is a normal function, not a constructor, it doesn't require the new operator.
+                But because it returns an object, calling it with new by mistake will work in exactly the same way.
+
+                >>> var t = triangle(5, 10);
+                >>> t.dimensions    ;//2
+                >>> var t2 = new triangle(5,5);
+                >>> t2.getArea();  // 12.5
+
+</pre>
+    <h1>Borrowing a Constructor</h1>
+    <h3>The constructor of the child calls the constructor of the parent <br />using either of the call() or apply() methods.</h3>
+    <pre>
+            function Shape(id) {
+                this.id = id;
+                }
+            Shape.prototype.name = 'shape';
+            Shape.prototype.toString = function(){return this.name;};
+
+            Define Triangle() which uses apply() to call the Shape()
+            constructor, passing this (an instance created with new Triangle()) and any additional arguments.
+
+            function Triangle() {
+                Shape.apply(this, arguments);
+                }
+        
+            Triangle.prototype.name = 'Triangle';
+
+                >>> var t = new Triangle(101);
+                >>> t.name   //"Triangle"
+
+            The new triangle object inherits the id property from the parent, 
+            but it doesn't inherit anything added to the parent's prototype:
+
+            >>> t.id   ;// 101
+            >>> t.toString();   // "[object Object]"
+
+                function Triangle() {
+                Shape.apply(this, arguments);
+                }
+                Triangle.prototype = new Shape();
+                Triangle.prototype.name = 'Triangle';
+</pre>
+</body>
+</html>

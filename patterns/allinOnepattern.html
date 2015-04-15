@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>All in One pattern</title>
+    <script>
+        	function Animal(name) {
+            	  this.name = name
+            	  this.run = function() {
+                	    alert("running "+this.name)
+                	  }
+            	}
+        	 
+        	var animal = new Animal('Foxie')
+        	animal.run()
+
+    </script>
+</head>
+<body>
+    <h3>properties and methods are assigned to this. As the result, we have a full object.</h3>
+</body>
+</html>

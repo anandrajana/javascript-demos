@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <h1>Events</h1>
+    <hr />
+    <h3>Inline HTML Attributes</h3>
+    <pre>  
+
+    Adding specific attributes to a tag is the laziest way, for example:
+
+    <div onclick="alert('Ouch!')">click</div>
+
+    <h3>Element Properties</h3>
+    <pre>
+        <div id="my-div">click</div>
+            <script type="text/javascript">
+                 var myelement = document.getElementById('my-div');
+                     myelement.onclick = function () {
+                                alert('Ouch!');
+                          }
+            </script>
+    </pre>
+    <h2>DOM EventListener - DOM Level 2</h2>
+    <pre>
+        <p id="closer">final</p>
+
+                >>> var mypara = document.getElementById('my-div');
+
+                >>> mypara.addEventListener('click', function()  {alert('Boo!')}, false);
+
+                >>> mypara.addEventListener('click', console.log, false);
+</pre>
+    <h1>Capturing and Bubbling</h1>
+    <h3>
+        1. Event capturing—the click happens on the document first, <br />
+            then it propagates to the body, the list, the list item, and finally to the link.
+        <br /><br />   
+        2. Event bubbling—the click happens on the link and then bubbles up to the document.</h3>
+
+    <img src="../../Event.jpg"  />
+
+    <pre>
+        <code>
+            <body>
+            <ul>
+            <li><a href="http://phpied.com">my blog</a></li>
+        </ul>
+    </body>
+        </code>
+    
+</pre>
+</body>
+</html>

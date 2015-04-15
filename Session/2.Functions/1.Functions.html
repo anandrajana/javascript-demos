@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Functions</title>
+    <script>
+        // Declarative function
+        function sum(a, b) {
+            var c = a + b;
+            return c;
+        }
+
+        var result = sum(1, 2);  // call the function
+        alert(result);
+
+        // Parameters with arguments
+        function sumOnSteroids() {
+            var i, res = 0;
+            var number_of_params = arguments.length;  // arguments is array like object
+            for (i = 0; i < number_of_params; i++) {
+                res += arguments[i];
+            }
+            return res;
+        }
+        alert(sumOnSteroids(1, 5, 10));
+
+        // Function Expression Syntax
+        var fn = function () {
+            alert("hi - Function Expression");
+        }
+        fn();
+
+        // Constructor Function or Instance Function
+        function Gadget(name, color) {
+            this.name = name;
+            this.color = color;
+            this.whatAreYou = function () {
+                return 'I am a ' + this.color + ' ' + this.name;
+            }
+        }
+        var newtoy = new Gadget('webcam', 'black');
+        console.log(newtoy.name);   //"webcam"
+        console.log(newtoy.color);       //"black"
+        console.log(newtoy.whatAreYou());
+
+        //Private Inner Function
+          
+        function a(param) {
+            function b(theinput) {
+                return theinput * 2;
+            };
+            return 'The result is ' + b(param);
+        };
+
+        
+        alert(a(2)); // "The result is 4"
+        //b(2);  //b is not defined
+
+
+        // Function Literal syntax
+        var a = function (param) {
+            var b = function (theinput) {
+                return theinput * 2;
+            };
+            return 'The result is ' + b(param);
+        };
+        console.log(a(2)); // "The result is 4"
+        // console.log(b(2));  //b is not defined
+
+        // Self Invoking Function - IIEF  -
+        (function () {
+       alert('I am Self Invoking Function - SIF - or IIEF  Immediately invoked Executing Function');
+            }
+         )()
+
+    // IIEF with parameter
+    ( function (name) {
+        alert('Hello ' + name + '!');
+    })('Murthy')
+
+    </script>
+</head>
+<body>
+    <h1>Functions</h1><hr />
+    <pre>       
+        Functions used to  group together some code, give this code a name,
+        and reuse it later, addressing it by name. 
+        
+        // Declarative Function  with name = sum
+        function sum(a, b) {
+        var c = a + b;
+        return c;
+        }
+    
+         var result = sum(1, 2);  // call the function  (call site)
+         result;
+
+What are the parts that make up a function?
+-----------------------------------------------
+    The function statement.
+    The name of the function, in this case sum.
+    Expected parameters (arguments), in this case a and b.
+                 A function can accept zero or more arguments, separated by commas.
+    A code block, also called the body of the function.
+    The return statement. A function always returns a value. 
+            If it doesn't return value explicitly, it implicitly returns the value undefined.
+</pre>
+    <h2>Predefined functions</h2>
+    <pre>
+            parseInt()
+            parseFloat()
+            isNaN()
+            encodeURI()
+            decodeURI()         
+            eval()
+</pre>
+    <pre>
+        parseInt() takes any type of input (most often a string) and tries to make an integer out of it.
+         If it fails, it returns NaN.
+
+        parseInt('123');  // 123
+    
+        parseInt('abc123');  //NaN
+
+         parseFloat()  looks for decimals when trying to figure out a number from your input. 
+        This function takes only one parameter.
+
+         parseFloat('123');// 123
+         parseFloat('1.23');//1.23
+
+
+        isNaN()  to check if an input value is a valid number that can safely be used in 
+            arithmetic operations. 
+
+         isNaN(NaN); //true
+         isNaN(123); //false
+
+
+        Encode/Decode URIs
+         to "escape"  characters in URL / URI,,  use these functions
+    
+         var url = 'http://www.xyz.com/scr ipt.php?q=this and that';
+
+        encodeURI(url);
+        "http://www.xyz.com/scr%20ipt.php?q=this%20and%20that"
+
+
+            eval()
+                eval() takes a string input and executes it as JavaScript code:
+            
+            eval('var x= 2;')
+             x;   // 2      So eval('var x = 2;') is the same as simply var x = 2;
+
+
+            The drawbacks of using eval() are:
+            -------------------------------------
+            Performance—it is slower to evaluate "live" code, than to have the code directly in the script.
+
+            Security—JavaScript is powerful, which also means it can cause damage. 
+                        If you don't trust the source of the input you pass to eval(), just don't use it.
+</pre>
+    
+</body>
+</html>

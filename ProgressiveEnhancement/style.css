@@ -1,0 +1,27 @@
+/* set some default css for our new HTML 5 elements */
+nav,header,footer,article { display:block; }
+
+#nav {
+    background:#c00;
+    padding:10px;
+    overflow:hidden; }
+
+#nav ul {
+    list-style:none;
+    margin:0;
+    padding:0; }
+
+#nav li {
+    float:left; }
+    
+#nav li a {
+    color:#fff;
+    padding:0 10px; }
+    
+@media only screen and (max-width:480px) {
+
+    /* do something to the design for small screens */
+    body {
+        background:#000; }
+
+}

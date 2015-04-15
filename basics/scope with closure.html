@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        /* set up anonymous function */
+        // Immediately executing function - closure
+        (function (w) {
+            /* define a variable inside the function */
+            var greeting = "Hello Murthy";
+
+            /* access the variable inside the function */
+            alert("in scope: " + greeting);
+                        
+        })();
+        /* try and access that variable outside the function scope */
+        alert("out of scope: " + typeof (greeting));
+        // alerts "undefined"
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

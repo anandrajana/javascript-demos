@@ -1,0 +1,32 @@
+﻿<html>
+<head>
+<script type="text/javascript">
+    function sub() {
+        if (document.getElementById("t1").value == "")
+            alert("Please enter your name");
+        else if (document.getElementById("t2").value == "")
+            alert("Please enter a password");
+        else if (document.getElementById("t2").value != document.getElementById("t3").value)
+            alert("Please enter correct password");
+        else if (document.getElementById("t4").value == "")
+            alert("Please enter your address");
+        else
+            alert("Form has been submitted");
+        return true;
+    }
+</script>
+</head>
+<body>
+<form>
+<p align="center">
+    <h3>Registration Form</h3>
+User Name:<input type="text" id="t1"><br><br>
+Password:<input type="text" id="t2"><br><br>
+Confirm Password:<input type="text" id="t3"><br><br>
+Address:<textarea rows="2" cols="25" id="t4"></textarea><br><br>
+<input type="button" value="Submit" onclick="sub()">
+<input type="reset" value="Clear All">
+</p>
+</form>
+</body>
+</html>

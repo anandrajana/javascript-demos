@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        // constructor
+        	function MyArray() { 
+            	  this.stringify = function() {
+                    return this.join(', ')
+                	  }
+            }
+       	// Make sure that (new MyArray) has the right __proto__ 
+        	MyArray.prototype = Array.prototype
+        
+        	// Test
+        	var myArr = new MyArray()
+        	myArr.push(1)
+            myArr.push(2)
+        	alert( myArr.stringify() ) // 1, 2
+        	alert(myArr.length) // 2 in all except IE
+
+
+        // constructor
+        		function Rabbit() { }
+        		 
+        		var rabbit = new Rabbit()
+        		 
+        		alert( rabbit.hasOwnProperty('constructor') ) // false
+        		alert( Rabbit.prototype.hasOwnProperty('constructor') ) // true
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

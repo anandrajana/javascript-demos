@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Objects</title>
+    <script>
+
+        //objects in objects
+        var book = {
+            name: 'Node JS',
+            published: 2012,
+            author: {
+                firstname: 'Ryan',
+                lastname: 'Dhal'
+            }
+        };
+        console.log(book.author.firstname);// Ryan
+
+
+        var emp = {
+            name: 'Sriram',
+            getInfo: function () {
+                console.log('I am method '+this.name);
+            }
+        };
+        console.log(emp.name);
+        console.log(emp.getInfo());
+
+        // Constructor function - Another way of creating objects
+        function Employee() {
+            this.name = 'Sriram'; // this = current object
+            this.occupation = 'Engineer';
+            this.getInfo = function () {
+                return "I'm " + this.name + " and I'm a " + this.occupation;
+            }
+        }
+        var e = new Employee();
+        console.log("employee info " + e.occupation); // Engineer
+        console.log(e.getInfo());
+
+
+        // Factory  - Function returning object
+        function factory(name) {
+            return {
+                name: name
+            };
+        }      
+         var o = factory('one');
+         console.log("factory :"+o.name);
+    </script>
+</head>
+<body>
+    <h1>Objects - OOP</h1>
+    <hr />
+    <h2>Builtin objects</h2>
+    <h4>Object ,  Array , Function, Boolean , Number , String , Math , Date , RegExp</h4>
+    <h5>Eg : var b1 = new Boolean(true)        >>> b1.valueOf()  </h5>
+    <pre>
+        
+        Object is the parent of all JavaScript objects and  every object we create inherits from it. 
+        To create a new empty object you can use the literal notation or the Object() constructor function. 
+
+        The following two lines are equivalent:
+        >>> var o = {};
+        >>> var o = new Object();
+
+        An empty object is not completely useless because it already contains some methods and properties.
+
+        o.constructor property returns the constructor function
+        o.toString() is a method that returns a string representation of the object
+        o.valueOf() returns a single-value representation of the object, often this is the object itself
+
+        >>> var o = new Object();
+       
+         Calling toString() returns a string representation of the object.
+        >>> o.toString()  // "[object Object]"
+
+    
+</pre>
+
+    <pre>
+        From Arrays to Objects:
+        --------------------------
+        Array is just a list of values. 
+
+        Array() is a built-in function that you can use as a constructor to create arrays:
+
+                >>> var a = new Array();
+
+                    This is equivalent to the array literal notation:
+                    >>> var a = [];
+
+       Each value has an index (a numeric key) starting from zero and incrementing by one for each value.
+
+         var myarr = ['red', 'blue', 'yellow', 'purple'];
+        myarr;    //["red", "blue", "yellow", "purple"]
+        myarr[0];  //red
+               
+
+        If you put the indexes in one column and the values in another, 
+                    you'll end up with a table of key/value pairs["key","Value"]
+
+            var emp = {
+                name: 'Sriram',
+                occupation: 'Engineer'
+            };
+            
+            Difference between array and Object :
+            ----------------------------------------
+                The name of the variable that contains the object is emp
+                Instead of [ and ] to define an array, use { and } for objects
+                separate the elements (called properties) contained in the object with commas
+                The key/value pairs are divided by colons, as key: value
+
+          Properties and Methods
+        -------------------------
+                var emp = {
+                    name: 'Sriram',
+                    getInfo: function(){
+                        alert('I am  method ''+this.name);  // this refers to emp  or emp.name
+                }
+            };
+            emp.name;    // Sriram
+            emp.getInfo()  // I am method Sriram
+
+           An associative array, also called a hash (the keys are strings)
+
+           Objects can contain any data, including other objects.
+
+            var book = {
+                    name: 'Node JS',
+                    published: 2012,
+                        author: {
+                        firstname: 'Ryan',
+                        lastname: 'Dhal'
+                                }
+                    };
+            book.author.firstname;// Ryan
+
+</pre>
+
+    <h3>
+        Best Practice Tip: No quotes
+         -----------------------------
+        1. Use the dot notation to access methods and properties
+        2. Don't quote properties in your object literals
+    </h3>
+    <hr />
+    <h2>Altering Properties/Methods<br />
+
+        JavaScript is a dynamic language; it allows to alter properties and methods of existing objects at any time.
+       <br /> This includes adding new properties or deleting them.
+    </h2>
+
+    <pre>
+            An empty object:                var product = {};
+           
+           Adding some properties and a method:
+    
+                    product.name = 'Keyboard';
+                    product.price = 500;
+                    product.getName = function() {return product.name;};
+
+                    Calling the method:    product.getName();
+    </pre>
+
+    <hr />
+    <h2>Constructor Function - Another way of creating objects</h2>
+    <pre>
+            function Employee() {
+            this.name = 'Sriram'; // this = current object
+            this.occupation = 'Engineer';
+            this.getInfo = function () {
+                return "I'm " + this.name + " and I'm a " + this.occupation;
+            }
+        }
+        var e = new Employee();
+        console.log("employee info " + e.occupation); // Engineer
+        console.log(e.getInfo());
+</pre>
+    <h2>Global object vs custom object</h2>
+    <pre>
+     Declaring a constructor function and calling it without new, returns "undefined":
+    
+     function Emp(name) {this.name = name;}
+     var h = Emp('Sriram');
+     typeof h  ;//  "undefined"
+
+    typeof h.name;    //   h has no properties
+
+    Because you had this inside Emp, a global variable (a property of the global object) called name was created  for window.
+    
+     name;   //  Sriram
+     window.name;  // Sriram
+
+    i.e. this by default refers to window object which is global object.
+
+    If you call the same constructor function  using new, then a new object is returned and this refers to it.
+    
+    var h2 = new Emp('Sriram');
+    typeof h2; // object
+    h2.name;   //"Sriram"
+
+   Constructor property:  // create another object with constructor property
+
+            var h3 = new h2.constructor('Kavitha');
+            h3.name;
+            h3 instanceof  Emp ;  //true
+</pre>
+
+    <h3>Function that return Objects - Factory</h3>
+      <pre>
+              function factory(name) {
+                return {
+                    name: name
+                    };
+            }
+
+        Using the factory():
+        >>> var o = factory('one');
+        >>> o.name
+</pre>
+</body>
+</html>

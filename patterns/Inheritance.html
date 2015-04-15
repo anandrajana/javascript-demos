@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Inheritance with apply</title>
+    <script>
+        function Animal(name) {
+            this.name = name
+            this.run = function () {
+                alert("running " + this.name)
+            }
+        }
+
+       
+        	function Rabbit(name) {
+            	 
+            	  Animal.apply(this, arguments) // inherit
+             
+            	  this.bounce = function() {
+                   alert("bouncing "+this.name)
+                	  }
+            	}
+        
+        	rabbit = new Rabbit("Rab")
+        	 
+        	rabbit.bounce() // own method
+        	 
+        	rabbit.run()    // inherited method
+
+    </script>
+</head>
+<body>
+    <h3>Inhetitance pattern with apply</h3>
+    <h2>All parent methods are called with apply/call to pass current object as <strong>this</strong></h2>
+</body>
+</html>

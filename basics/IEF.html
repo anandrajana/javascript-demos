@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>IEF</title>
+    <script>
+        (function () {
+            "use strict";
+
+            /* store employees in an array */
+            var emp = ["Murthy", "Kavitha", "Pranav", "Sruthi"];
+            var EmpCount = emp.length;
+            var i;
+
+            /* checking to make sure there are people in the list */
+            if (EmpCount > 0) {
+
+                /* loop through each emp */
+                for (i = 0; i < EmpCount; i = i + 1) {
+
+                    /* this represents 1 person */
+                    var e = emp[i];
+
+                    if (e === "Murthy") {
+                        alert(e + ", this is me!");
+                    } else {
+                        document.write("<br/>" + e.toUpperCase());
+                    }
+                }
+            }
+        })();
+    </script>
+</head>
+<body>
+    <h1>Immediately Executing Function</h1>
+</body>
+</html>

@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html >
+<head>
+    <title>Functions</title>
+    <script>
+        // declaration function by default attached to window global object
+        function add(x, y) {
+            return x + y;
+        }
+
+        // functin literal or function Expresssion
+        var fn = function () {
+           console.log('welcome to function Expression (no name for this function)');
+        }
+
+        console.log("Delacaration function:" + add(10, 20));// call declaration function
+     
+
+        fn();// call function expression 
+        console.log("fn is type of " + typeof (fn));  // fn is type of function
+        if (typeof fn === "function") {
+            console.log("yes..fn is type of function ")
+        }
+
+        // function constructor  via factory method
+        function createPerson(fname, lname) {
+            //  factory
+            return {
+                fname: fname,
+                lname: lname,
+                getFullName: function () {
+                    return this.fname + '  ' + this.lname;
+                }               
+            }
+        }
+        var p1 = createPerson("sri", "ram");
+        console.log(p1.getFullName());
+
+        
+
+
+        //Grouping functions
+        var Person={
+            fname:'sri',// property
+            lname:'ram',
+
+            getFullName:function(){  //method
+                return this.fname+'  '+this.lname;   // this refers to Person object and not window             
+                }
+            };
+        console.log(Person.getFullName());
+
+
+        // pass function as parameter
+        function otherFunction(x, y, z) {
+            x(y, z);
+        }
+        // Anonymous function
+        var param = function (arg1, arg2) { alert(arg1 + " " + arg2); };
+        otherFunction(param, "Hello", "World");
+
+
+        //callback function   - called later 
+        window.addEventListener("load", function (){
+            console.log("I am call back function fired after DOM tree is created");
+        }, false ); 
+
+
+        // calling a function within function 
+        function sayHello(message) {
+            console.log(message);
+        }
+        (function (){
+            var greeting = "Welcome";
+            sayHello(greeting);
+        })();
+
+
+        function whatIsIt(){
+            return this.toString();
+        }
+       var myObj = {};
+       alert(whatIsIt.apply(myObj));
+       alert(whatIsIt.apply(window));
+      
+    </script>
+</head>
+<body>
+    <h1>Functions</h1>
+    <hr />
+
+    <pre>
+      
+        JavaScript functions are objects. They can be defined using the Function constructor, like so:
+
+                >>> var sum = new Function('a', 'b', 'return a + b;');
+
+        This is equivalent to the function literal:
+
+                >>> var sum = function(a, b){return a + b;};
+
+    or the more common:
+
+            >>> function sum(a, b){return a + b;}
+
+   Members of Function:
+    ----------------------
+            apply(this_obj, params_array)
+
+                Allows  to call another function while overwriting its this value.
+
+                 The first parameter that apply() accepts is the object to be bound to this 
+                 inside the function and the second is an array of parameters to be passed to the function being called.
+
+                function whatIsIt(){
+                    return this.toString();
+                    }
+
+                >>> var myObj = {};
+                >>> whatIsIt.apply(myObj);  // "[object Object]"
+                >>> whatIsIt.apply(window); //"[object Window]"
+
+            call(this_obj, p1, p2, p3, ...)
+                    Same as apply() but accepts parameters one by one, as opposed to as one array.
+
+            length
+                The number of parameters the function expects.
+                >>> alert.length  //1
+               
+
+</pre>
+
+    <h3>
+        1. Declarative functions <br/>
+        2. Function Expression   <br/>
+        2. Anonymous function or constructor function
+    </h3><br />
+
+</body>
+</html>

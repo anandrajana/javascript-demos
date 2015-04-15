@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <h1>BOM and DOM - Browser Environment</h1>
+    <hr />
+    <h2>BOM and DOM—An Overview</h2>
+    <h3>
+        The JavaScript code in a page has access to a number of objects. These objects can be divided into:<br />
+        <br />Objects that have to do with the currently loaded page (the page is also called the document), and
+        <br />Objects that deal with things outside the page (the browser window)<br />
+        <br />The first collection of objects makes up the Document Object Model (DOM) 
+        <br />and the second the Browser Object Model (BOM).
+
+    <br /><br />
+    The DOM is a standard, governed by the World Wide Web Consortium (W3C) 
+    <br />and has different versions, called levels, such as DOM Level 1, DOM Level 2,<br /> and—the last one so far—DOM Level 3.
+    </h3>
+    <h1>BOM</h1>
+    <h3>
+    The BOM (Browser Object Model) is a collection of objects that give <br />access to the browser  and the computer screen. 
+    <br />These objects are accessible through the global objects window and window.screen
+
+    <br />Eg : window.parseInt('12456')
+    <br />window.navigator.userAgent
+    </h3>
+    <pre>
+            if (navigator.userAgent.indexOf('MSIE') !== -1) {
+                    // this is IE
+                } else {
+                    // not IE
+            }
+
+            if (typeof window.addEventListener === 'function') {
+                    // feature is supported, let's use it
+        } else {
+                // hmm, this feature is not supported, will have to  think of another way
+    }
+        
+        window.location.href="http://www.site.com"
+        window.history.length
+        history.forward()
+        history.back()
+        history.go(-1);
+        var win = window.open('http://www.site.com', 'My window','width=300,height=300,resizable=yes');
+        window.setTimeout(), window.setInterval()
+        window.alert(), window.prompt(),window.confirm()
+</pre>
+    <h2>window.document</h2>
+    <pre>
+      window.document is a BOM object that refers to the currently  loaded document (page).
+     Its methods and properties fall into the DOM category of objects
+
+     document.documentElement       -->     html
+     document.documentElement.tagName   --> html
+
+     Child Nodes:
+    --------------
+        In order to tell if a node has any children you use hasChildNodes():
+
+        >>> document.documentElement.hasChildNodes();//true
+               document.documentElement.childNodes.length
+                document.documentElement.childNodes[0]  --> head  [1] returns body
+                document.documentElement.childNodes[1].parentNode  --> returns html
+                document.getElementsByTagName('p').length
+
+                var para = document.getElementById('closer')
+                >>> para.nextSibling
+                >>> para.previousSibling
+               
+        Modify DOM Node:
+        -------------------
+                >>> var my = document.getElementById('closer');
+
+                Now changing the text of the paragraph can be as easy as changing the innerHTML value:
+
+                >>> my.innerHTML = 'final!!!';
+                >>> my.style.fontWeight = 'bold';   // modify style
+
+         Creating New Nodes:
+        ------------------------
+
+       To create new nodes, use the methods createElement() and createTextNode(). 
+        Once you have the new nodes, you add them to the DOM tree with appendChild().
+
+        Creating a new p element and setting its innerHTML:
+        
+        >>> var myp = document.createElement('p');
+        >>> myp.innerHTML = 'yet another';   //"yet another"
+
+        </pre>
+</body>
+</html>

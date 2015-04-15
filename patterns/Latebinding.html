@@ -1,0 +1,33 @@
+﻿<!DOCTYLE HTML>
+<html>
+<body>    
+    	<script>
+        	function bindLate(funcName, fixThis) { 
+              return function() {
+                	    return fixThis[funcName].apply(fixThis, arguments)
+                	  }
+            	}
+       
+        	function Menu(elem) {
+            
+              this.sayHi = function() { alert('Menu') }
+            
+            	  elem.onclick = bindLate('sayHi', this)
+            }
+        
+        	function SuperMenu(elem) {
+              Menu.apply(this, arguments)
+            
+            	  this.sayHi = function() { alert('SuperMenu') }
+            	}
+        
+        	new SuperMenu(document.body)
+        	</script>
+    
+    Click me. I'm a SuperMenu! 
+    
+    
+</body>
+
+</html>
+

@@ -1,0 +1,44 @@
+{
+"addressBook" : [
+    {
+        "name": "hillisha",
+        "email": "hill@example.com"
+    },
+    {
+        "name": "paul",
+        "email": "cleveland@example.com"
+    },
+    {
+        "name": "vishaal",
+        "email": "vish@example.com"
+    },
+    {
+        "name": "mike",
+        "email": "grady@example.com"
+    },
+    {
+        "name": "jamie",
+        "email": "dusted@example.com"
+    },
+    {
+        "name": "gini",
+        "email": "g@example.com"
+    },
+    {
+        "name": "kristen",
+        "email": "marv@example.com"
+    },
+    {
+        "name": "starlen",
+        "email": "stars@example.com"
+    },
+    {
+        "name": "archie",
+        "email": "ie@example.com"
+    },
+    {
+        "name": "bill",
+        "email": "hickey@example.com"
+    }
+]
+}

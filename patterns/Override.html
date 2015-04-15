@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        function Animal(name) {
+            this.name = name
+            this.run = function () {
+                alert("running " + this.name)
+            }
+        }
+
+       	function Rabbit(name) {
+            	 
+              Animal.apply(this, arguments) 
+            	 
+            	  var parentRun = this.run  // keep parent method
+            	 //override
+            	  this.run = function() {  
+                	    alert("Overrided - bouncing "+this.name)
+                	    parentRun.apply(this)  // call parent method
+                	  }
+            	}
+        	 
+        	rabbit = new Rabbit("Rab")
+         
+        	rabbit.run()    // inherited method
+
+    </script>
+</head>
+<body>
+   
+</body>
+</html>

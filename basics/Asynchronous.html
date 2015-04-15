@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <h2>Promise API in angular</h2>
+    	<div style="width:200px;height:150px;background-color:#100"></div>
+    
+    	<input type="button" onclick="run()" value="run()">
+       <input type="button" onclick="stop()" value="stop()">
+    
+      <script>
+          var timer;
+        
+        	function run() {
+            	  var div = document.getElementsByTagName('div')[0]
+            	  var i=0x100000
+              
+            	  function func() {
+            	      timer = setTimeout(func, 10)
+                	    div.style.backgroundColor = '#'+i.toString(16)
+                	    if (i++ == 0xFFFFFF) stop()
+                  }            
+            	  timer = setTimeout(func, 10);// call func first time
+            	}
+        
+       	function stop() {
+              clearInterval(timer)
+            }
+       	</script>
+    <br />
+    <pre>
+        The internal order:
+1.	setTimeout appends the func call to the event queue.
+2.	The new call is scheduled on the next tick.
+3.	The func executes and changes the div which appends a repaint request to the queue.
+4.	The function finishes. The browser takes the next event from the queue which is repaint and executes it. Then it waits the next tick to execute one more func call (see step 2).
+5.	Repeated until stop()
+
+</pre>
+</body>
+</html>

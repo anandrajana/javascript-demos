@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        function Animal(name) {
+            var x = 10;
+            function show() { alert(x);}
+            return {
+                run: function () {
+                    alert(name + " is running!")
+                    show();// internally call private methods
+                }
+            }
+        }
+        var animal = Animal("fox"); // no new keyword
+         animal.run();
+
+    </script>
+</head>
+<body>
+    <h1>Factory Pattern</h1>
+</body>
+</html>

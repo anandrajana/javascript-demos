@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <pre>
+        
+        Object() is a constructor that creates objects, for example:
+
+        >>> var o = new Object();
+
+        This is the same as using the object literal:
+
+        >>> var o = {}; // recommended
+
+        You can pass anything to the constructor and it will try to guess what it is and
+        use a more appropriate constructor.
+
+         For example, passing a string to new Object() will be the same as using the new String() constructor.
+               
+         >>> var o = new Object('something');
+        >>> o.constructor;   //       String()
+
+        >>> var o = new Object(123);
+        >>> o.constructor;  //  Number()
+
+        
+</pre>
+</body>
+</html>

@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Protypical inheritance</title>
+
+    <script>
+        /*
+        var animal = { eats: true }
+        var rabbit = { jumps: true }
+        rabbit.__proto__ = animal  // inherit
+        alert(rabbit.eats) // true
+        */
+       
+        /*
+        	var animal = {
+              eat: function() { 
+                   alert( "I'm full" )
+                        this.full = true
+              }
+        	}        
+        		var rabbit = { 
+        	    jump: function() { alert("jump"); }
+        	}
+        	 
+        		rabbit.__proto__ = animal;        	
+                rabbit.eat()  
+                
+        */
+
+        // IE 9  cross browser Object.Create()
+        var animal = { eats: true }
+        rabbit = Object.create(animal)
+        rabbit.jumps = true;// add properties to it once created
+       	alert(rabbit.eats) // true
+
+
+       	//Object.getPrototypeOf(obj)
+     //  	Returns the value of obj.__proto__. The method is standard, so it works in browsers which don’t support __proto__ property: 
+
+       	var animal = {
+       	    eats: true
+       	}
+       	rabbit = Object.create(animal);
+       	alert(Object.getPrototypeOf(rabbit) === animal) // true
+
+
+        // Prototype
+       	function Rabbit(name) { 
+       	    this.name = name
+       	}
+       	var rabbit = new Rabbit('Murthy');
+       	alert(rabbit.name) // Murthy
+      // 	A new function call sets the __proto__ of the object to the value of its prototype property.
+  
+    
+    // Let us implement prototype
+       	var animal = { eats: true };       	 
+       		function Rabbit(name) { 
+       	      this.name = name
+       	    }
+       	
+       		Rabbit.prototype = animal ;
+       	//	The code Rabbit.prototype = animal literally means the following:
+        //    ”set __proto__ = animal for all objects created by new Rabbit”. 
+
+       	var rabbit = new Rabbit('Murthy')
+       	alert( rabbit.eats ) // true, because rabbit.__proto__ == animal
+       	alert(rabbit.hasOwnProperty('eats')); // false
+    
+    
+        // Extending native types
+         String.prototype.repeat = function(times) {
+       	    return new Array(times+1).join(this)
+       	    	}
+       		alert( "a".repeat(3) ) // aaa
+
+        // Extended each loop
+       			Object.prototype.each = function(f) {
+       		      for(var prop in this) {
+       		            if (Object.prototype.hasOwnProperty(prop)) continue // filter
+       		           var value = this[prop]
+       		           f.call(value, prop, value) 
+       		          }
+       		    }       		
+       		var obj = { name: 'Murthy', age: 40 }
+       		obj.each(function(prop, val) {  
+       		    	  alert(prop) // name -> age 
+       		    	})
+
+
+      </script>
+</head>
+<body>
+
+</body>
+</html>

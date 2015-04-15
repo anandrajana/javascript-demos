@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>apply</title>
+    <script> 
+        //Calling function by attaching object  (apply & call)
+        //----------------------------------------------------
+   
+        var Calculate=function(x,y,fn){
+         return fn(x,y);
+            }
+     // modular code
+     var sum=function(x,y){return x+y};
+     var diff=function(x,y){return x-y};
+     var sumResult=Calculate(1,2,sum);
+     var diffResult=Calculate(2,1,diff);
+     console.log('first diffresult: '+diffResult);
+
+ 
+     // Issue with above code, we have to work only with 2 parameters x and y 
+     //  function(x,y,a,b,fn);... we have problem
+ 
+      
+         var obj={
+             name:"obj object",
+             doSomething:function(){
+                 console.log("name after passing data using apply :"+this.name);
+             }
+         };
+         var foo={name:"foo object"};
+         var bar={name:"bar object"};
+
+         // attach foo object by passing to apply function
+         obj.doSomething.apply(foo);
+
+         // apply expects 2 parameter. one is object and second is array.
+        //     modify the code to work with second parameter of apply by passing array
+       
+      
+        var obj={
+            name:"obj object",
+            doSomething:function(x,y){
+                console.log('foo with array:'+this.name+' '+x+ '  '+y);
+            }
+        };
+        var foo={name:"foo object"};
+        var bar={name:"bar object"};
+        obj.doSomething.apply(foo, [1, 2]);
+        // output :   foo with array:foo object 1  2
+
+        //Solution for previous code
+
+        var Calculate = function () {
+            // arguments is not array so extract parameters 
+            var fn = Array.prototype.pop.apply(arguments);
+            return fn.apply(null, arguments);
+        }
+        var sum = function (x, y) { return x + y };
+        var diff = function (x, y) { return x - y };
+        var sumResult = Calculate(1, 2, sum);
+        var diffResult = Calculate(2, 1, diff);
+        alert(diffResult);
+
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        	// Animal 
+        	function Animal(name) {
+            	  this.name = name
+            	}
+        
+        	// Animal methods
+        	Animal.prototype = { 
+            	  canWalk: true,
+            	  sit: function() {
+                	    this.canWalk = false
+                       alert(this.name + ' sits down.')
+                 }
+        	}
+        	 
+        	// Rabbit
+        function Rabbit(name) {
+            	  this.name = name
+            	}
+        
+        	// inherit
+       	Rabbit.prototype = inherit(Animal.prototype)
+        	
+        // Rabbit methods
+        	Rabbit.prototype.jump = function() {
+             this.canWalk = true
+            	  alert(this.name + ' jumps!')
+            	}
+         
+        	// Usage
+        	var rabbit = new Rabbit('Sniffer')
+        
+        	rabbit.sit()   // Sniffer sits.
+        	rabbit.jump()  // Sniffer jumps!
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

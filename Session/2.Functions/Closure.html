@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Closure</title>
+    <script>
+
+          //Closure #1
+        function f(){
+            var data = "I am safe data";
+            return function(){
+                return data; 
+            }
+        }
+       // This function contains a variable data, which is local, and therefore inaccessible from the global space:
+        //console.log(data);//    data is not defined
+
+        var n = f(); // return value of f(): it's another function.
+        console.log(n() + " - n is of type :" + typeof (n)); // I am safe data   n is of type function
+
+        //Closure #2
+        //f() doesn't return a function, but instead it creates a new global function n() inside its body.
+        var n;
+        function f1(){
+            var data = "I am safe data";
+            n = function(){ // Anonymous function
+                return data;
+            }
+        }        
+        console.log(f1());   // function (){return data;}
+        alert("closure #2 " + n()); // I am safe data
+
+        //#closure #3
+        //closure is created when a function keeps a link to its parent's scope even after the parent has returned.
+        function f2(arg) {
+                var myfun = function(){
+                     return arg;
+                };
+             arg++;
+            return myfun;// return private function
+        }            
+           var m = f2(123);
+            console.log("Closure 3 :"+ m());//     124
+
+
+            // what is the output ? guess
+            var k = 1;
+            function fk() {
+                var k = 2;
+                function nk() {
+                    alert(" Guess :" + k);
+                }
+                nk();
+            }
+            fk();
+
+
+        //Getter and Setter with Closure  
+            var getValue, setValue;
+            (function () {
+                var secret = 0;
+                getValue = function () {
+                    return secret;
+                };
+                setValue = function (v) {
+                    secret = v;
+                };
+            })()
+            console.log(getValue());//0
+            setValue(123)
+            getValue();//   123
+
+          
+               // All these examples alert "Boom!". Can you explain why?
+
+            var f = alert;
+            eval('f("Boom!")');
+
+
+            var e;
+            var f = alert;
+            eval('e=f')('Boom!');
+
+            (function(){
+                return alert;
+            })()('Boom!');
+
+    </script>
+</head>
+<body>
+    <h1>Closures</h1>
+    <hr />
+    <h4>closure is created when a function keeps a link to its parent's scope 
+    even <br />
+    after the parent has returned.</h4>
+    <br />
+    <h4>When you pass an argument to a function it becomes available as a local variable. 
+        <br />You can create a function that returns another function, which in turn returns its parent's argument.</h4>
+
+    <pre>
+            What does this following code alert()?
+                var a = 1;
+                function f() {
+                    var a = 2;
+                        function n() {
+                            alert(a);
+                        }
+                    n();
+                }
+            f();
+</pre>
+    <hr />
+    <h1>What is coverd till now</h1>
+    <h3>
+        Functions as data—a function is like any other piece of data that you assign to a variable and a lot of interesting applications follow from this, such as:
+       <br /> Private functions and private variables
+        <br />Anonymous functions
+        <br /> Callbacks
+        <br />Self-invoking functions
+        <br /> Closure
+    </h3>
+</body>
+</html>
