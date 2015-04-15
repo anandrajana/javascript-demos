@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Coding Patterns Javascript</title>
+</head>
+<body>
+<h1>Coding Practises</h1>
+<hr>
+    <h2>
+        <br />Separating behavior
+       <br /> Namespace
+        <br />Lazy definition
+        <br />Configuration objects
+        <br />Private variables and methods
+        <br />Privileged methods
+        <br />Chaining
+        <br />Private functions as public methods
+        <br />Self-executable functions
+        <br />JSON
+    </h2>
+	<h2>Seperating Behavior</h2>
+	<pre>
+		the three building blocks of a web page are:
+		Content (HTML)
+		Presentation (CSS)
+		Behavior (JavaScript)
+		.
+		The best strategy for separating behavior from content would be:
+		
+	1. Minimize the number of script tags
+	2. Avoid inline event handlers
+	3. Do not use CSS expressions
+	4. Dynamically add markup that has no purpose when JavaScript is disabled by the user
+	5. Insert a  xyz.js file at the end of body
+	</pre>
+	<h2>Namespaces</h2>
+	<pre>
+	Global variables should be avoided in order to lower the possibility 
+	of variable naming collisions. 
+	
+	One way to minimize the number of globals is by namespacing 
+	variables and functions. 
+	
+	create only one global object and all other variables and 
+	functions become properties of that object.
+	
+	An Object as a Namespace:
+	------------------------
+	Let's create a global object called MYAPP:
+	// global namespace
+	var MYAPP = MYAPP || {};
+	
+	// sub-object
+	MYAPP.event = {};
+	
+	Adding the methods to the event utility is pretty much the same as usual:
+	// object together with the method declarations
+
+	MYAPP.event = {
+		addListener: function(el, type, fn) {
+			// .. do the thing
+	},
+		removeListener: function(el, type, fn) {
+	// ...
+	},
+	getEvent: function(e) {
+		// ...
+		}
+	// ... other methods or properties
+	};
+
+	Namespaced Constructor:
+	----------------------
+	
+	MYAPP.dom = {};
+	MYAPP.dom.Element = function(type, prop){
+	var tmp = document.createElement(type);
+	for (var i in prop) {
+		tmp.setAttribute(i, prop[i]);
+	}
+	return tmp;
+	}
+	Similarly, you can have a Text constructor to create text nodes if you want to:
+	
+	MYAPP.dom.Text = function(txt){
+		return document.createTextNode(txt);
+	}
+	
+	Using the constructors to create a link at the bottom of a page:
+
+	var el1 = new MYAPP.dom.Element( 'a',{href:'http://phpied.com'});
+	var el2 = new MYAPP.dom.Text('click me');
+	el1.appendChild(el2);
+	document.body.appendChild(el1);
+	
+	Namespaced Method:
+	-----------------
+	var MYAPP = {};
+	MYAPP.namespace = function(name){
+		var parts = name.split('.');
+		var current = MYAPP;
+		for (var i in parts) {
+			if (!current[parts[i]]) {
+				current[parts[i]] = {};
+					}
+			current = current[parts[i]];
+			}
+	}
+	Testing the new method:
+	
+	MYAPP.namespace('event');
+	MYAPP.namespace('dom.style');
+	
+	The result of the above is the same as if you did:
+	
+	var MYAPP = {
+		event: {},
+		dom: {
+			style: {}
+			}
+		}
+	
+	</pre>
+	<h2>Lazy Definition</h2>
+	<pre>
+	The function is first defined with a generic body. 
+	It checks which functionality is supported by the browser when 
+	it is called for the first time and then redefines itself 
+	using the most suitable implementation.
+	At the end of the first call, the function calls itself so that the 
+	actual event attaching is performed. The next time you call the 
+	same function it will be defined 
+	with its new body and will be ready for use, 
+	so no further branching is necessary.
+	
+	var MYAPP = {};
+	MYAPP.myevent = {
+	addListener: function(el, type, fn){
+		if (typeof el.addEventListener === 'function') {
+			MYAPP.myevent.addListener = function(el, type, fn) {
+			el.addEventListener(type, fn, false);
+			};
+		} else if (typeof el.attachEvent === 'function'){
+			MYAPP.myevent.addListener = function(el, type, fn) {
+				el.attachEvent('on' + type, fn);
+			};
+		} else {
+			MYAPP.myevent.addListener = function(el, type, fn) {
+			el['on' + type] = fn;
+			};
+		}
+		MYAPP.myevent.addListener(el, type, fn);
+		}
+	};
+	</pre>
+	
+	<h2>Configuration Object</h2>
+	<pre>
+		This pattern is useful when you have a function or method that 
+		accepts a lot of parameters
+		
+		MYAPP.dom.Button = function(text, conf) {
+			var type = conf.type || 'submit';
+			var font = conf.font || 'Verdana';
+			// ...
+		}
+		var config = {
+			font: 'Arial, Verdana, sans-serif',
+			color: 'white'
+			};
+		new MYAPP.dom.Button('puuush', config);
+	</pre>
+	<h2>Private Properties and Methods</h2>
+	<pre>
+		JavaScript doesn't have the notion of access modifiers, 
+		which set the privileges of the properties in an object. 
+		
+		Here's how Button can make use of the local private properties:
+	
+		var MYAPP = {};
+		MYAPP.dom = {};
+		MYAPP.dom.Button = function(text, conf) {
+			var styles = {
+				font: 'Verdana',
+				border: '1px solid black',
+				color: 'black',
+		};
+		function setStyles() {
+			for (var i in styles) {
+				b.style[i] = conf[i] || styles[i];
+				}
+			}
+		conf = conf || {};
+		var b = document.createElement('input');
+		b.type = conf['type'] || 'submit';
+		b.value = text;
+		setStyles();
+				return b;
+			};
+    </pre>
+	<h2>Private functions as public methods</h2>
+	<pre>
+	var MYAPP = {};
+	MYAPP.dom = (function(){
+		var _setStyle = function(el, prop, value) {
+		console.log('setStyle');
+		};
+		var _getStyle = function(el, prop) {
+			console.log('getStyle');
+		};
+		return {
+			setStyle: _setStyle,
+			getStyle: _getStyle,
+			
+		};
+	})()
+	MYAPP.dom.setStyle = function(){alert('b')};
+	</pre>
+
+    <h2>Chaining</h2>
+       <pre>        
+        Chaining is a pattern that allows  to invoke methods on one line as
+         if the methods are the links in a chain when calling several related methods.
+
+      So, invoke the next method on the result of the previous method, without the use of an intermediate variable.
+
+        Imagine you've created a constructor that helps to work with DOM elements.
+
+               var obj = new MYAPP.dom.Element('span');
+                    obj.setText('hello');
+                    obj.setStyle('color', 'red');
+                    obj.setStyle('font', 'Verdana');
+                    document.body.appendChild(obj);
+
+         The constructors return the this object they create. 
+
+        You can make your methods such as setText() and setStyle() also return this, 
+        which will allow you to call the next method on the instance 
+        returned by the previous one. 
+
+        document.body.appendChild(
+                new MYAPP.dom.Element('span')
+                    .setText('hello')
+                    .setStyle('color', 'red')
+                    .setStyle('font', 'Verdana')
+            );
+
+</pre>
+
+    <h2>JSON</h2>
+    <pre>
+     JSON stands for JavaScript Object Notation
+
+     JSON is a popular lightweight format for exchanging data.
+
+     It's often preferred over XML when using XMLHttpRequest() to retrieve     data from the server. 
+
+    The JSON format consists of data, defined using object and array literals.
+
+            {
+                'name': 'Sriram',
+                'family': 'Dhulipala',
+                    'books': ['java', 'ajax', 'angular']
+             }
+</pre>
+
+</body>
+</html>

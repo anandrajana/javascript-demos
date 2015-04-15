@@ -1,0 +1,40 @@
+<!DOCTYPE >
+<html>
+<head>
+<title>Dynamically creating DOM </title>
+<script language="JavaScript" type="text/javascript">
+
+function addNode(nodeID,text) {
+
+// create the paragraph node
+var paraNode = document.createElement('p');
+
+// create a text node for the paragraph node
+var textNode = document.createTextNode(text);
+
+// add the text node to the paragraph node as a child
+paraNode.appendChild(textNode);
+
+// add the paragraph node and text node child to the web page
+document.getElementById(nodeID).appendChild(paraNode);
+
+
+}
+</script>
+</head>
+
+<body>
+ <h1 id="heading1">Welcome to add a comment</h1>
+    <div id="commentText"></div>
+<form name="commentForm" id="commentForm">
+Please write a comment.<br />
+<textarea name="comment" rows="10" cols="30">Write comment here</textarea><br />
+</form>
+
+<form name="actionForm" id="actionForm">
+<input type="button" value="Click me to add a comment" 
+       onclick="addNode('commentText',document.commentForm.comment.value)" />
+</form>
+</body>
+</html>
+

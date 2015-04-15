@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Primitives</title>
+    <script>
+       //Variables
+        var a;
+        var thisIsAVariable;
+        var _and_this_too;
+        var mix12three;
+
+        //declare and initialize
+        var a = 1;
+
+        // declare with single var - Best Practise
+        var v1, v2, v3 = 'hello', v4 = 4, v5;
+
+        // case sensitive
+        var case_matters = 'lower';
+        var CASE_MATTERS = 'upper';
+
+    </script>
+</head>
+<body>
+    <h1>Primitive Data types  & Variables  (Try in Console of Debugger)</h1>
+    <hr>
+    <h1>   Primitive Data Types</h1>
+    <h3>number,   string,   boolean,    undefined ,   null</h3>
+    <pre>     
+ 
+1. Number—this includes floating point numbers as well as integers, for example 1, 100, 3.14.
+             var n = 1;
+             typeof n;  //number
+             var n2 = 1.23;
+             typeof n2; //number
+
+            Infinity
+            It represents a number too big for JavaScript to handle.
+                Dividing by 0 will give you infinity.
+                 var a = 6 / 0;
+                  a   // Infinity
+
+                    NaN
+                    "Not A Number", NaN is a special value that is also a number.
+
+                    typeof NaN     //"number"
+
+2. String—any number of characters, for example "a", "one", "one 2 three".
+                 var s = "some characters";
+                typeof s;  // string
+
+3. Boolean—can be either true or false.
+
+                   var b = true; typeof b;  //"boolean"
+
+4. Undefined—when you try to access a variable that doesn't exist, 
+                     you get the special value undefined
+
+                     foo   //   foo is not defined
+
+                    typeof foo  //  "undefined"
+
+5. Null— It means no value, an empty value, nothing (null is object)
+
+                The null value, is not assigned by JavaScript behind the scenes;
+                it can only be assigned by your code.
+
+                var somevar = null
+              
+                somevar // null
+
+                 typeof somevar    //  "object"
+
+       -  Primitive (the five types listed above), or
+       -   Non-primitive (objects)
+
+</pre>
+    <div>Variables :used to store data.</div>
+    <div>1. Declare the variable <br />
+             2. Initialize it (give value)
+    <br />
+      <b>Variable names are case-sensitive</b>            
+    </div>
+
+    <br />
+    <pre>
+           
+        var a;
+        var thisIsAVariable;
+        var _and_this_too;
+        var mix12three;
+
+        //declare and initialize
+        var a = 1;
+
+        // declare with single var - Best Practise
+        var v1, v2, v3 = 'hello', v4 = 4, v5;
+
+        // case sensitive
+        var case_matters = 'lower';
+        var CASE_MATTERS = 'upper';
+</pre>
+
+    <h2>RECAP on Primitives</h2><br /><hr />
+    <h3>    
+     
+        There are five primitive data types in JavaScript:<br />
+        number,   string,   boolean,    undefined ,   null
+        <br />
+        Everything that is not a primitive is an object
+        <br />
+        The number data type can store positive and negative integers or floats, hexadecimal numbers, octal numbers, exponents, and the special numbers NaN, Infinity, and –Infinity
+        
+        <br />The string data type contains characters in quotes
+        <br />The only values of the boolean data type are true and false
+        <br />The only value of the null data type is the value null
+        <br />  The only value of the undefined data type is the value undefined
+        
+        <hr />
+        <h1>Data structure based object ( Array - List of values (elements) of any type)</h1>
+        <hr /><br />
+        <pre>
+        To declare a variable that contains an empty array
+             var a = [];
+             typeof a;    //"object"
+
+           To define an array that has three elements :
+            var a = [1,2,3];
+            a        // [1,2,3]
+            a[0]  // 1     
+
+            a[2] = 'three';  // update array    //[1,2,"three"]
+
+            a[3] = 'four';    // add element
+    
+            var a = [1,2,3];
+            a[6] = 'new';
+             a ;   //  [1, 2, 3, undefined, undefined, undefined, "new"]
+        
+            // delete 
+             var a = [1, 2, 3];
+             delete a[1]; 
+             a;     //    [1, undefined, 3]                
+
+             Arrays of arrays
+             ==========   
+             var a = [1, "two", false, null, undefined];
+             a  //   [1, "two", false, null, undefined]
+            a[5] = [1,2,3]
+            a    //[1, "two", false, null, undefined, [1, 2, 3]]
+
+
+            2 Dimensional array:
+
+            var a = [[1,2,3],[4,5,6]];
+            a ; //   [[1, 2, 3], [4, 5, 6]]
+            a[0][0]
+
+        </pre>
+        <hr />
+        <h1>Summary on Array</h1>
+        <h3>
+            An array is a data store
+            <br /> An array contains indexed elements
+            <br />Indexes start from zero and increment by one for each element in the array
+            <br /> To access array elements we use the index in square brackets
+            <br />An array can contain any type of data, including other arrays
+        </h3>
+
+    </h3>
+
+    <h1>Summary on Operators</h1>
+    <h3>
+     
+        <br />  Arithmetic operators: +, -, *, /, and %.
+        <br />  Increment operators: ++ and --.
+        <br /> Assignment operators: =, +=, -=, *=, /=, and %=.
+        <br /> Special operators: typeof and delete.
+        <br /> Logical operators: &&, ||, and !.
+        <br /> Comparison operators: ==, ===, !=, !==, <,>, >=, and <=.
+</h3>
+
+    <h1>Exercises</h1>
+    <pre>
+        
+1. What is the result of executing each of these lines in the console? Why?
+var a; typeof a;
+var s = '1s'; s++;
+!!"false"
+!!undefined
+typeof -Infinity
+10 % "0"
+undefined == null
+false === ""
+
+
+
+2. What is the value of v after the following?
+>>> var v = v || 10;
+Experiment by first setting v to 100, 0, null, or unset it (delete v).
+
+3. Write a script that prints out the multiplication table. Hint: use a loop nested inside another loop.
+</pre>
+</body>
+</html>

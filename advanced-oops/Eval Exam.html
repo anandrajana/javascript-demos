@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <script>
+           // All these examples alert "Boom!". Can you explain why?
+
+             var f = alert;
+                eval('f("Boom!")');
+
+
+                var e;
+                var f = alert;
+                eval('e=f')('Boom!');
+
+        (function(){
+                return alert;
+        })()('Boom!');
+
+</script>
+</body>
+</html>

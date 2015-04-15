@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html >
+<head>
+    <title></title>
+</head>
+<body>
+    <script>
+        // Model - view - Controller
+        // Book Factory singleton 
+        // Self Invoking Function
+        var BookFactory = (function () {
+            var existingBooks = {}, existingBook;
+
+            // private model object   MODEL
+            function Book(x, y, z) {
+                this.title = x;
+                this.price = y;
+                this.ISBN = z;
+            }
+            // public function   CONTROLLER
+            return {
+                createBook: function (title, price,ISBN) {
+                    // Find out if a particular book  has been created before
+                    // !! or (bang bang) forces a boolean to be returned
+                    existingBook = existingBooks[ISBN];
+                    if (!!existingBook) {
+                        return existingBook;
+                    } else {
+                        // factory
+                        // if not, let's create a new instance of the book and store it
+                        var book = new Book(title, price,ISBN);
+                        existingBooks[ISBN] = book;// store the data in collection
+                        return book;
+                    }
+                }
+            };            
+        });
+        var b = BookFactory();
+       var bookobj = b.createBook("jquery", 2000, 1111);
+
+        // VIEW
+        document.write("ISBN : " + bookobj.ISBN + "  title : " + bookobj.title +
+            "  price : " + bookobj.price);       
+    </script>
+
+</body>
+</html>

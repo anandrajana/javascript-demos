@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>optional parameters</title>
+</head>
+<body>
+    <script>
+        // UNREFINED
+        function showStatistics(name, team, position, average, homeruns, rbi) {
+           
+
+  document.write("<p><strong>Name:</strong> " + arguments[0] + "<br />");
+  document.write("<strong>Team:</strong> " + arguments[1] + "<br />");
+
+  if (typeof arguments[2] === "string") {
+    document.write("<strong>Position:</strong> " + position + "<br />");
+  }
+  if (typeof arguments[3] === "number") {
+    document.write("<strong>Batting Average:</strong> " + average + "<br />");
+  }
+  if (typeof arguments[4] === "number") {
+    document.write("<strong>Home Runs:</strong> " + homeruns + "<br />");
+  }
+  if (typeof arguments[5] === "number") {
+    document.write("<strong>Runs Batted In:</strong> " + rbi + "</p>");
+  }
+}
+showStatistics("Murthy");
+showStatistics("Murthy", "India");
+showStatistics("Murthy", "India", "1st Base", .284, 32, 101);  
+    </script>
+
+
+    <script>
+        // REFINED 
+        function showStatistics(args) {// args is js object
+            
+            document.write("<p><strong>Name:</strong> " + args.name + "<br />");
+            document.write("<strong>Team:</strong> " + args.team + "<br />");
+            if (typeof args.position === "string") {
+                document.write("<strong>Position:</strong> " + args.position + "<br />");
+            }
+            if (typeof args.average === "number") {
+                document.write("<strong>Average:</strong> " + args.average + "<br />");
+            }
+            if (typeof args.homeruns === "number") {
+                document.write("<strong>Home Runs:</strong> " + args.homeruns + "<br />");
+            }
+            if (typeof args.rbi === "number") {
+                document.write("<strong>Runs Batted In:</strong> " + args.rbi + "</p>");
+            }
+        }
+
+        document.write("<p>REFINED =============================</p><br />");
+        showStatistics({
+            name: "Murthy"
+        });
+
+        showStatistics({
+            name: "Murthy",
+            team: "India"
+        });
+
+        showStatistics({
+            name: "Murthy",
+            team: "India",
+            position: "1st Base",
+            average: .284,
+            homeruns: 32,
+            rbi: 101
+        });
+
+
+
+        // Namespace
+        if (typeof MY == "undefined") {
+            MY = new Object();
+            MY.CUSTOM = new Object();
+        }
+
+        MY.CUSTOM.namespace = function () {
+            function showStatistics(args) {
+                document.write("Namespace --------------------------------------------<br/>");
+                document.write("<p><strong>Name:</strong> " + args.name + "<br />");
+                document.write("<strong>Team:</strong> " + args.team + "<br />");
+                if (typeof args.position === "string") {
+                    document.write("<strong>Position:</strong> " + args.position + "<br />");
+                }
+                if (typeof args.average === "number") {
+                    document.write("<strong>Average:</strong> " + args.average + "<br />");
+                }
+                if (typeof args.homeruns === "number") {
+                    document.write("<strong>Home Runs:</strong> " + args.homeruns + "<br />");
+                }
+                if (typeof args.rbi === "number") {
+                    document.write("<strong>Runs Batted In:</strong> " + args.rbi + "</p>");
+                }
+            }
+
+            showStatistics({
+                name: "Murthy",
+                team: "India",
+                position: "1st Base",
+                average: .284,
+                homeruns: 32,
+                rbi: 101
+            });
+        }
+        MY.CUSTOM.namespace();
+
+    </script>
+</body>
+</html>

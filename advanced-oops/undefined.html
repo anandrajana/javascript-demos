@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <script>
+        /*
+        var a;
+        typeof a; // "undefined"
+        var b = 42;
+        var c;
+        // later
+        b = c;
+        alert(typeof b); // "undefined"
+        typeof c; // "undefined"
+        */
+
+
+        var DEBUG = true
+
+        // oops, this would throw an error!
+        if (DEBUG) {
+            console.log("Debugging is starting");
+        }
+
+        // this is a safe existence check
+        if (typeof DEBUG !== "undefined") {
+            console.log("Debugging is starting");
+        }
+
+    </script>
+</body>
+</html>

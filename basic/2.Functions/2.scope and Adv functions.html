@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Scope</title>
+    <script>
+        //      The function f() has access to the variable global
+        //    Outside of the function f(), the variable local doesn't exist
+                var global = 1;
+                function myFun() {
+                    var local = 2;
+                    global++;
+                    alert("inside global value :"+global)                    
+                }
+                
+                myFun();                
+               // console.log(local);//    local is not defined -  error
+
+                function f() { return 1; }
+                console.log(typeof f);  // "function"
+
+        //callback
+
+                function invoke_and_add(a, b){
+                    return a() + b();
+                }    
+              //  define two simple additional functions that only return hardcoded values:
+
+                function one() {
+                    return 1;
+                }
+                function two() {
+                    return 2;
+                }
+             //   Now we can pass those functions to the original function add() and get the result:
+        
+                var r = invoke_and_add(one, two);//  3
+                console.log("callback result :" + r);
+
+        // example on callback
+                function multiplyByTwo(a, b, c) {
+                    var i, ar = [];
+                    for(i = 0; i < 3; i++) {
+                        ar[i] = arguments[i] * 2;
+                    }
+                    return ar;
+                }
+                function addOne(a) {
+                    return a + 1;
+                }
+               
+            console.log( multiplyByTwo(1, 2, 3));
+            console.log(addOne(100));  //  101
+
+        //improved version of above code
+            function multiplyByTwonew(a, b, c, callback) {
+                var i, ar = [];
+                for (i = 0; i < 3; i++) {
+                    ar[i] = callback(arguments[i] * 2);
+                }
+                return ar;
+            }
+            //By using the modified function,  the whole work is now done with just one function call, which passes the start values and the callback.
+        //   myarr = multiplyByTwo(1, 2, 3, addOne);  //[3, 5, 7]
+
+        //-------------------------------------------
+
+
+        
+
+        //Inner functions via literal
+            var a = function(param) {
+                var b = function(theinput) {
+                    return theinput * 2;
+                };
+                return 'The result is ' + b(param);
+            };
+
+            // When you call the global function a(), it will internally 
+            // call the local function b(). Since b() is local,
+            //it's not accessible outside a(), so we can say it's a private function.
+
+                console.log(a(2)); // "The result is 4"
+                console.log(a(8)); // "The result is 16"
+        // console.log(b(2));  //b is not defined
+
+
+       
+    </script>
+</head>
+<body>
+    <h1>Scope </h1><hr />
+    <pre>
+       JavaScript are not defined in a block scope, but in a function scope. 
+
+            >>> var a = 1; function f(){var b = 1; return a;}
+            >>> f();   //1
+            >>> b      //b is not defined
+
+       This means that if a variable is defined inside a function,it's not visible outside of the function.
+     
+
+        a variable defined inside an if or a for code block is visible outside the code block.
+              
+       The code inside a function has access to all global variables as well as to its own local variables.
+
+      Scope Chain :
+       -------------
+
+      If you define a function n() nested inside f(), n() will have access to variables 
+      in its own scope, plus the scope of its "parents" called Scope Chain
+
+        var a = 1;
+        function f(){
+            var b = 1;
+                function n() {
+                    var c = 3;
+                     console.log(a + "-" +b+" - "+c);
+                }
+            }
+            
+
+</pre>
+    <hr />
+    <h3>Functions are Data</h3>
+    <pre>
+         
+     Functions in JavaScript  are actually data. 
+
+    // Declarative function (name=fun)
+    function fun(){return 1;}        
+    typeof fun;  // "function"
+
+    // Function Expression without name
+    var f = function(){return 1;} // function literal notation (no name for function)
+        . 
+
+    So JavaScript functions are data, but a special kind of data with two important features:
+
+        1. They contain code
+        2. They are executable (can be invoked)
+
+    so functions can be deleted like data:
+
+     var sum = function(a, b) {return a + b;}
+     delete sum ;  //true
+     typeof sum; // "undefined"
+</pre>
+
+    <h1>Anonymous functions</h1>
+    <pre>
+     functions are like any other variable so they can also be used without being  assigned a name:
+  
+    
+     function(a){return a;}
+
+    1. You can pass an anonymous function as a parameter to another function. 
+                The receiving function can do something useful with the function that you pass.
+    
+    2. You can define an anonymous function and execute it right away. 
+    
+</pre>
+
+    <h1>callback Functions</h1>
+    <pre>
+           
+    Passing function as parameter to other function
+    ----------------------------------------------------
+
+    Because a function is just like any other data assigned to a variable, 
+   it can be defined, deleted, copied, and also passed as an argument to other functions
+
+            function invoke_and_add(a, b){
+                return a() + b();
+            }
+    
+     define two simple additional functions that only return hardcoded values:
+
+        function one() {
+                return 1;
+                }
+
+        function two() {
+            return 2;
+        }
+
+        Now we can pass those functions to the original function add() and get the result:
+        
+        invoke_and_add(one, two);//  3
+
+            
+      Why callback ?
+       -------------
+        1. They let you pass functions without the need to name them 
+                    (which means there are less global variables)
+
+      2. You can delegate the responsibility of calling a function to another function
+             (which means there is less code to write)
+
+      3. They can help with performance
+</pre>
+
+    <h1>Self Invoking Function</h1>
+    <pre>
+          
+ calling this function (anonymous) right after it was defined. 
+
+    (
+        function(){
+            alert('boom');
+        }
+    )()
+
+</pre>
+
+    <h1>Private (Inner) functions</h1>
+<pre>
+  
+    function a(param) {
+        function b(theinput) {
+            return theinput * 2;
+        };
+    return 'The result is ' + b(param);
+    };
+
+        a(2); // "The result is 4"
+         b(2);  //b is not defined
+
+     Using the function literal notation, this can also be written as:
+
+    var a = function(param) {
+        var b = function(theinput) {
+                return theinput * 2;
+        };
+        return 'The result is ' + b(param);
+    };
+
+        When you call the global function a(), it will internally call the 
+        local function b(). 
+
+        Since b() is local, it's not accessible outside a(), 
+        so we can say it's a private function.
+
+         a(2); // "The result is 4"
+         a(8); // "The result is 16"
+         b(2);  //b is not defined
+</pre>
+    <hr />
+    
+    <h1>Functions that return functions</h1>
+    <pre>
+        
+    we know that function always return one value (atleast undefined implicitly)
+
+    A function can return only one value and this value could  be another function.
+
+        function a() {
+            alert('A!');
+            return function(){
+                alert('B!');
+            };
+        }
+
+    In this example the function a() does its job (says A!) and returns another function that 
+    does something else (says B!). 
+
+    You can assign the return value to a variable and then use this variable as a normal function:
+
+    var newFunc = a();
+    newFunc();
+
+        Here the first line will alert A! and the second will alert B!.
+
+        
+</pre>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+    
+    <meta charset="utf-8">
+    <title>Address Book Application</title>
+    <style>
+        .active { background:#ddd; }
+        .hovering { background:#eee; }
+        form > div { padding:10px; }
+    </style>
+    
+</head>
+<body>
+
+<h1>Address Book</h1>
+
+<form action="" method="get" id="search-form">
+    
+    <div>
+        <label for="q">Search address book</label>
+        <input type="search" id="q" name="q" required placeholder="type a name" autocomplete="off">
+    </div>
+    
+    <div class="button-group">
+        <button type="submit" id="search-btn">search</button>
+        <button type="button" id="get-all">get all contacts</button>
+    </div><!--/.button-group-->
+    
+</form>
+
+<div id="output" aria-atomic="true" aria-live="polite"></div><!--/#output-->
+
+<!-- Keeping JS at the bottom, because we rock at performance -->
+<script src="js/addressbook.js"></script>
+
+</body>
+</html>

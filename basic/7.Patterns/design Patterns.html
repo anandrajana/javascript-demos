@@ -1,0 +1,304 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Design Pattern</title>
+    <script>
+        //singleton
+        function Logger() {
+            if (typeof Logger.single_instance === "undefined") {
+                Logger.single_instance = this;
+            }
+            return Logger.single_instance;
+        }
+        var a = new Logger();
+        var b = new Logger();
+        alert(a === b); // true
+
+        // Factory
+        var MYAPP = {};
+        MYAPP.dom = {};
+        MYAPP.dom.Text = function () {
+            this.insert = function (where) {
+                var txt = document.createTextNode(this.url);
+                //where.appendChild(txt);
+            };
+        };
+
+        MYAPP.dom.Link = function () {
+            this.insert = function (where) {
+                var link = document.createElement('a');
+                link.href = this.url;
+                link.appendChild(document.createTextNode(this.url));
+               // where.appendChild(link);
+            };
+        };
+
+        MYAPP.dom.Image = function () {
+            this.insert = function (where) {
+                var im = document.createElement('img');
+                im.src = this.url;
+               // where.appendChild(im);
+            };
+        };
+
+        var o = new MYAPP.dom.Image();
+        o.url = 'LogoSmall.png';
+
+        o.insert(document.body);
+        var o = new MYAPP.dom.Text();
+
+        o.url = 'LogoSmall.png';
+        o.insert(document.body);
+
+        var o = new MYAPP.dom.Link();
+        o.url = 'LogoSmall.png';
+        o.insert(document.body);
+
+
+        // Decorator - Christmas tree
+        var tree = {};
+        tree.decorate = function () {
+            alert('Make sure the tree won\'t fall');
+        };
+
+        tree.getDecorator = function (deco) {
+            tree[deco].prototype = this;
+            return new tree[deco];
+        };
+
+        tree.RedBalls = function () {
+            this.decorate = function () {
+                this.RedBalls.prototype.decorate();
+                alert('Put on some red balls');
+            }
+        };
+
+        tree.BlueBalls = function () {
+            this.decorate = function () {
+                this.BlueBalls.prototype.decorate();
+                alert('Add blue balls');
+            }
+        };
+        tree.Angel = function () {
+            this.decorate = function () {
+                this.Angel.prototype.decorate();
+                alert('An angel on the top');
+            }
+        };
+
+        // Now let's add all of the decorators to the base object:
+
+        tree = tree.getDecorator('BlueBalls');
+        tree = tree.getDecorator('Angel');
+        tree = tree.getDecorator('RedBalls');
+        
+        //Finally, running the decorate() method:
+
+        tree.decorate();
+
+        /*This single call results in the following alerts (in this order):
+        
+            1. Make sure the tree won't fall
+            2. Add blue balls
+            3. An angel on the top
+            4. Put some red balls
+
+            */
+
+
+        // Observer 
+
+        // First create Subscribers
+        var observer = {
+            addSubscriber: function (callback) {
+                this.subscribers[this.subscribers.length] = callback;
+            },
+            removeSubscriber: function (callback) {
+                for (var i = 0; i < this.subscribers.length; i++) {
+                    if (this.subscribers[i] === callback) {
+                        delete (this.subscribers[i]);
+                    }
+                }
+            },
+            publish: function (what) {
+                for (var i = 0; i < this.subscribers.length; i++) {
+                    if (typeof this.subscribers[i] === 'function') {
+                        this.subscribers[i](what);
+                    }
+                }
+            },
+            make: function (o) { // turns an object into a publisher
+                for (var i in this) {
+                    o[i] = this[i];
+                    o.subscribers = [];
+                }
+            }
+        };
+
+        // Now let's create some publishers. A publisher can be any object; 
+        //its only duty is to call the publish() method whenever something important occurs
+
+       // Here's a blogger object which calls publish() every time a new blog posting is ready.
+        var blogger = {
+            writeBlogPost: function() {
+                var content = 'Today is ' + new Date();
+                this.publish(content);
+            }
+        };
+
+        //Another object could be the The Hindu newspaper which calls publish() when a new newspaper issue is out.
+        var hindu = {
+            newIssue: function () {
+                var paper = 'IT industry is going fast in Andhra and Telangana';
+                this.publish(paper);
+            }
+        };
+
+        observer.make(blogger);
+        observer.make(hindu);
+
+        var sriram = {
+            read: function (what) {
+                console.log('I just read that ' + what)
+            }
+        };
+        var raj = {
+            gossip: function (what) {
+                console.log('You didn\'t hear it from me, but ' + what)
+            }
+        };
+
+        //sriram and raj  can subscribe to the blogger object by providing the callback
+        //methods they want to be called when something is published.
+        blogger.addSubscriber(sriram.read);
+        blogger.addSubscriber(raj.gossip);
+
+       // What happens now when the blogger writes a new post? The result is that sriram and raj get notified:
+        blogger.writeBlogPost();
+
+        // remove subscription
+        blogger.removeSubscriber(raj.gossip);
+        blogger.writeBlogPost();
+
+    </script>
+</head>
+<body>
+    <h1>Design Patterns</h1>
+
+    <h2>Best solutions for recurring problems in Object Oriented world</h2>
+
+    <pre>
+    1.  Creational patterns that deal with how objects are created (instantiated)
+
+    2. Structural patterns that describe how different objects can be composed in order to provide new functionality
+
+    3. Behavioral patterns that describe ways for objects to communicate with each other
+
+    Some Patterns :
+    ----------------
+    Singleton
+    Factory
+    Prototype
+    Facade
+    Decorator
+    Proxy
+    Observer
+    Model View Controller - MVC
+</pre>
+    <h2>Singleton</h2>
+    <pre>
+     Instance of a class is only created once and any subsequent attempts
+     to create new objects of the same class would return the original instance.
+
+     In javascript , every object is a single object. 
+
+     If you don't copy it and don't use it as a prototype of another object, it will remain the only object of its kind.
+    
+    Singleton #1:
+    --------------
+     var single = {};  // Obect Literal with Singleton  
+
+    Singleton #2:
+    ---------------
+            var my_log = new Logger();
+            my_log.log('some event');
+                // ... 1000 lines of code later ...
+
+           var other_log = new Logger();
+            other_log.log('some new event');
+            alert(other_log === my_log); // true
+
+     Global Variable:
+    -----------------
+        One approach would be to use a global variable to store the single instance.
+
+    function Logger() {
+                if (typeof global_log === "undefined") {
+                    global_log = this;
+                }
+            return global_log;
+        }
+
+    Using this constructor gives the expected result:
+
+        var a = new Logger();
+        var b = new Logger();
+        alert(a === b); // true
+
+    Drawback - It can be overwritten any time
+
+    Property of constructor:
+    -------------------------
+            Assign the single instance to a property of the constructor function.
+
+            function Logger() {
+                if (typeof Logger.single_instance === "undefined") {
+                    Logger.single_instance = this;
+                }
+                return Logger.single_instance;
+            }
+</pre>
+
+    <h2>Factory</h2>
+    <h4>Create Object based on user input</h4>
+    <h3>See demo above</h3>
+    <hr />
+    <h2>Decorator</h2>
+    <h3>Attach additional responsibility at runtime as and when required without polluting base object</h3>
+    <pre>
+            var obj = {
+            function: doSomething(){
+                console.log('sure, asap');
+            },
+            // ...
+        };
+            obj = obj.getDecorator('deco1');
+            obj = obj.getDecorator('deco13');
+            obj = obj.getDecorator('deco5');
+            obj.doSomething();
+</pre>
+    <h2>Observer</h2>
+    <pre>
+      The observer pattern (also known as the subscriber-publisher pattern) is a behavioral pattern, 
+      which means that it deals with how different objects interact and communicate with each other.
+
+      When implementing the observer pattern you have the following objects:
+
+    1. One or more publisher objects that announce when they do something important, and
+  
+    2. One or more subscribers that are tuned in to one or more publishers
+        and listen to what the publishers announce, then act appropriately.
+
+        The observer object will have the following properties and methods:
+
+    1. An array of subscribers that are just callback functions 
+
+    2. addSubscriber() and removeSubscriber() methods that add to and remove from the subscribers array
+
+    3. A publish() method that takes data and calls all subscribers, passing the data to them
+
+   4.  A make() method that takes any object and turns it into a publisher by adding all of the above methods to it
+
+</pre>
+</body>
+</html>

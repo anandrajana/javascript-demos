@@ -1,0 +1,41 @@
+<!DOCTYPE >
+<html >
+<head>
+<title>View code snippet page</title>
+<script language="JavaScript" type="text/javascript">
+/* navigating the document tree structure */
+
+function retrieveValues()
+{
+	/* gain access to the html root element */
+
+	var htmlNode = document.documentElement;
+	/* navigate down and traverse across the tree structure */
+
+	var bodyNode = htmlNode.lastChild;// body
+	var h1Node = bodyNode.firstChild; // h1
+	var h1TextValue = h1Node.firstChild.nodeValue;// null
+	var pNode = h1Node.nextSibling;//p
+	var pTextValue = pNode.firstChild.nodeValue;//null
+	window.alert(h1TextValue);
+	window.alert(pTextValue);
+}
+</script>
+</head>
+<body>
+    <h1>
+        Level 1 Heading text: last child of html node, first child of body node, first child of h1 node.
+        <div>I am div tag</div>
+    </h1>
+
+    <p>
+        Paragraph text: next sibling of h1 node, first child of p node.
+        <div> I am div in paragraph</div>
+    </p>
+
+    <form name="getTextValues" id="getTextValues">
+        <input type="button" value="Click me to access the h1 and p node text values"
+               onclick="retrieveValues()" />
+    </form>
+</body>
+</html>

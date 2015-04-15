@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>OOPS</title>
+    <script>
+        //Object Oriented Programming:
+        // Javascript is object oriented language
+
+       
+
+    var Person1 ={
+        fname:"sri",// property
+        lname:"ram",
+        getFullName:function(){   //method
+                 return this.fname+'  '+this.lname;
+        // this refers to Person object not window 
+            }
+        };
+
+        alert(Person1.getFullName());
+  
+        // Another person
+        var Person2={
+            fname:'Lalitha',// property
+            lname:'suraj',
+            getFullName:function(){  //method
+                    return this.fname+'  '+this.lname;
+             }
+        }
+        alert(Person2.getFullName());
+
+        //like this if you keep on create person3, person4..., we endup with lot of code
+        //so difficult to maintain.
+
+
+     
+        // Better way  - Create Factory with closure  using function constructor syntax
+         
+      
+
+       //  Constructor function
+
+            var Employee=function (fname,lname){
+                // constructor function starts with Capital letter Employee
+                    this.fname=fname;   // properties
+                    this.lname=lname;   
+
+                     this.getFullName=function(){
+                             return this.fname+'  '+this.lname;
+                            }
+                     this.greet=function(emp){
+                            if(emp instanceof Employee){
+                                    return "hi! "+emp.getFullName();
+                }
+            }
+        };
+            var e1= new Employee("Kavitha ","Murthy"),
+                    e2= new Employee("Mallika","ramprasad");
+            alert('output with constructor function '+e1.greet(e2));
+          
+            /*
+     
+     Problem with above code:
+                    Everytime you create object, with new keyword getFullName() and greet()
+            function objects are created for every Employee so if you create more
+            more  objects, we endup with lot of memory  - BAD.
+
+                Solution :  Prototype property
+
+            Any object created with Prototype is shared by all other function objects.
+            create methods with prototype so that every object reuse it.
+
+            ---------------------------------------------
+       */
+        
+        // Prototypical inheritance
+
+            var Person=function(fname,lname){
+                this.fname=fname;
+                this.lname=lname;
+            }
+
+                Person.prototype.getFullName=function(){
+                    return this.fname+'  '+this.lname;
+                }
+
+                Person.prototype.greet=function(p){
+                    if(p instanceof Person){
+                          return "hi! "+p.getFullName();
+                    }
+                } 
+                var  p1= new Person("sri","ram"),
+                     p2= new Person("rama","sri");
+                alert('Prototypical inheritance :'+ p1.greet(p2));
+
+                // works efficiently as getFullName() and greet() created only once and shared
+                
+
+               
+                  
+                   
+ 
+                    
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

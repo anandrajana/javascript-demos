@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html >
+<html >
+<head>
+  <title>JavaScript</title>
+</head>
+<body>
+  <script language="JavaScript" type="text/javascript">
+  function Book(isbn, author, title) {
+    var _isbn = isbn;
+    var _author = author;
+    var _title = title;
+
+    this.get_isbn = function() {
+      return _isbn;
+    }
+    this.set_isbn = function(value) {
+      _isbn = value;
+    }
+    this.get_author = function() {
+      return _author;
+    }
+    this.set_author = function(value) {
+      _author = value;
+    }
+    this.get_title = function() {
+      return _title;
+    }
+    this.set_title = function(value) {
+      _title = value;
+    }
+    
+    this.toString = function() {
+      return _author + ": " + _title + " (" + _isbn + ")";
+    }
+  }
+  
+  var atlas = new Book("0792275438", "National Geographic");
+  atlas.set_title("Atlas of the World");
+  document.write(atlas.toString());
+  </script>
+</body>
+</html>

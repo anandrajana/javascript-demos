@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html >
+<html>
+<head>
+  <title>JavaScript</title>
+  <script>
+  function ShowText(f) {
+    var paragraph = document.getElementsByTagName("p")[0];
+    var label = document.createElement("span");
+    var text = document.createTextNode(f.elements["TextBox1"].value);
+    label.appendChild(text);
+    paragraph.appendChild(label);
+  }
+  </script>
+</head>
+<body>
+  <form action="">
+    <input type="text" name="TextBox1" />
+    <input type="button" value="Show text" onclick="ShowText(this.form);" />
+    <p>Entered text: </p>
+  </form>
+</body>
+</html>

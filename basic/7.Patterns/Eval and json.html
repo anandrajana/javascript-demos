@@ -1,0 +1,61 @@
+<!DOCTYPE html >
+<html >
+<head>
+  <title>JSON</title>
+</head>
+<body>
+    <h1>JSON DEMO</h1>
+  <script  type="text/javascript">
+
+      var msg = eval("alert('welcome to javascript');");
+      var f = new Function("alert('welcome to javascript');")
+      alert(f);
+
+      // Defines the source JSON that represents an object with a single property
+      var json = '{"name":"Sri"}';
+
+      //Converts the JSON to a JavaScript object
+      var object = eval("(" + json + ")");
+      alert(object.name);
+  
+
+      
+      var json1 = { 'x': 10, 'y': 20 };// simple key value - Object Literal
+      document.write(json1.x + " : " + json1.y);
+
+      //employee JSON single object
+      var json2 = { 'name': 'murthy', 'job': 'engineer', 'salary': 5000.00 }
+      document.write("<br/> name : " + json2.name + " - job " + json2.job + " - salary :" + json2.salary);
+
+      // JSON Array
+      var jsonarray = { 'x': [10, 20, 30] };
+      document.write("<br/>Array details");
+      for (var i = 0; i < jsonarray.x.length; i++)
+      { document.write("<br/>   " + jsonarray.x[i]);}
+
+      //JSON object collection
+      var jsonemps = {
+          emps: [
+              { 'id': 101, 'name': 'murthy' },
+              { 'id': 102, 'name': 'Raju' },
+              { 'id': 103, 'name': 'kiran' },
+          ]
+      }
+           
+      for (var i=0;i<jsonemps.emps.length;i++) {
+          document.write("<br/> " + jsonemps.emps[i].id+" - "+jsonemps.emps[i].name);
+      }
+
+
+      // JSON complex object collection
+      //var jsonobj = '{"book":{ "title": "Jquery", "author": "Christian", "chapters":{"chapter": [ {"number": "1", "title": "Introduction"}, {"number": "2", "title": "JavaScript"}, {"number": "3", "title": "Ajax"} ]} }}';
+      //eval("var obj = " + jsonobj + ";");
+    
+    //for (var i=0; i < obj.book.chapters.chapter.length; i++) {
+    //  document.write("<p>" + obj.book.chapters.chapter[i].number +": " +  obj.book.chapters.chapter[i].title +"</p>" );
+      
+   // }
+  </script>
+
+</body>
+</html>
